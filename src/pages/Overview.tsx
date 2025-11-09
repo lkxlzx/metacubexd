@@ -3,7 +3,7 @@ import type { EChartsOption } from 'echarts'
 import { EChartsAutoSize } from 'echarts-solid'
 import { defaultsDeep } from 'lodash'
 import type { JSX, ParentComponent } from 'solid-js'
-import { DataUsageTable, DocumentTitle } from '~/components'
+import { DataUsageTable, DocumentTitle, ProxyNodeTrafficTable } from '~/components'
 import { CHART_MAX_XAXIS, DEFAULT_CHART_OPTIONS } from '~/constants'
 import { useI18n } from '~/i18n'
 import { endpoint, latestConnectionMsg, useWsRequest } from '~/signals'
@@ -136,6 +136,7 @@ export default () => {
       series: [
         {
           type: 'pie',
+          radius: ['40%', '70%'], // 增加饼图半径，使用环形图样式
           labelLine: {
             show: false,
           },
@@ -237,6 +238,8 @@ export default () => {
         </div>
 
         <DataUsageTable />
+
+        <ProxyNodeTrafficTable />
 
         <footer class="mx-auto mt-4 footer block footer-horizontal rounded-box bg-neutral p-4 text-center text-lg font-bold text-neutral-content">
           {endpoint()?.url}

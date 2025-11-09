@@ -199,6 +199,20 @@ const diffClosedConnections = (
   return allConns.filter((c) => !activeIds.has(c.id))
 }
 
+// Proxy Node Traffic tracking
+export type ProxyNodeTrafficEntry = {
+  nodeName: string
+  type: string
+  upload: number
+  download: number
+  total: number
+  connectionCount: number
+}
+
+export const [proxyNodeTrafficMap, setProxyNodeTrafficMap] = createSignal<
+  Record<string, ProxyNodeTrafficEntry>
+>({})
+
 // Data Usage tracking
 const migrateDataUsageMap = (
   data: Record<string, DataUsageEntry>,
@@ -324,6 +338,56 @@ export const updateDataUsage = (connections: Connection[]) => {
   })
 
   setDataUsageMap(updates)
+  
+  // Update proxy node traffic
+  updateProxyNodeTraffic(connections)
+}
+
+export const updateProxyNodeTraffic = (connections: Connection[]) => {
+  const nodeTrafficMap = new Map<
+    string,
+    {
+      upload: number
+      download: number
+      connectionCount: number
+    }
+  >()
+
+  connections.forEach((conn) => {
+    const chains = conn.chains || []
+    const upload = conn.upload || 0
+    const download = conn.download || 0
+
+    chains.forEach((nodeName) => {
+      if (!nodeTrafficMap.has(nodeName)) {
+        nodeTrafficMap.set(nodeName, {
+          upload: 0,
+          download: 0,
+          connectionCount: 0,
+        })
+      }
+
+      const nodeData = nodeTrafficMap.get(nodeName)!
+      nodeData.upload += upload
+      nodeData.download += download
+      nodeData.connectionCount += 1
+    })
+  })
+
+  const updates: Record<string, ProxyNodeTrafficEntry> = {}
+
+  nodeTrafficMap.forEach((data, nodeName) => {
+    updates[nodeName] = {
+      nodeName,
+      type: '', // 类型将在组件层面从 proxyNodeMap 获取
+      upload: data.upload,
+      download: data.download,
+      total: data.upload + data.download,
+      connectionCount: data.connectionCount,
+    }
+  })
+
+  setProxyNodeTrafficMap(updates)
 }
 
 export const clearDataUsage = () => {

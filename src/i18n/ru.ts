@@ -142,4 +142,11 @@ export default {
   sortBy: 'Сортировать по:',
   ipShort: 'IP',
   na: 'Н/Д',
+  proxyNodeTraffic: 'Трафик прокси-узлов',
+  proxyNodes: 'Прокси-узлы',
+  totalConnections: 'Всего подключений',
+  proxyNodeName: 'Имя прокси-узла',
+  noProxyNodeTrafficYet: 'Данных о трафике прокси-узлов пока нет',
+  hideRules: 'Скрыть правила',
+  showRules: 'Показать правила',
 } satisfies Dict

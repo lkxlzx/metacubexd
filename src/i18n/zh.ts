@@ -142,4 +142,11 @@ export default {
   sortBy: '排序：',
   ipShort: 'IP',
   na: '无',
+  proxyNodeTraffic: '节点流量统计',
+  proxyNodes: '节点数',
+  totalConnections: '总连接数',
+  proxyNodeName: '节点名称',
+  noProxyNodeTrafficYet: '暂无节点流量数据',
+  hideRules: '隐藏规则',
+  showRules: '显示规则',
 } satisfies Dict

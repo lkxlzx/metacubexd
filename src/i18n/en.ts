@@ -140,4 +140,11 @@ export default {
   sortBy: 'Sort by:',
   ipShort: 'IP',
   na: 'N/A',
+  proxyNodeTraffic: 'Proxy Node Traffic',
+  proxyNodes: 'Proxy Nodes',
+  totalConnections: 'Total Connections',
+  proxyNodeName: 'Proxy Node Name',
+  noProxyNodeTrafficYet: 'No proxy node traffic data yet',
+  hideRules: 'Hide Rules',
+  showRules: 'Show Rules',
 }
